@@ -1,0 +1,6 @@
+{
+  "name": "Meridian Journal",
+  "description": "A modern editorial publication featuring thoughtful articles on architecture, craftsmanship, marine ecology, and culinary arts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
