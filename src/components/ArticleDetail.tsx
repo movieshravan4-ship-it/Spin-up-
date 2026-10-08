@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ArrowLeft, Clock, Share2, Check, Bookmark, Sparkles } from "lucide-react";
-import { Article, ARTICLES } from "../data/articles";
+import { ArrowLeft, Clock, Share2, Check, Bookmark, Sparkles, Camera, ZoomIn } from "lucide-react";
+import { Article, ARTICLES, ArticleImage } from "../data/articles";
 import { ArticleCard } from "./ArticleCard";
 
 interface ArticleDetailProps {
@@ -17,6 +17,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
   const [copied, setCopied] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeModalImage, setActiveModalImage] = useState<ArticleImage | null>(null);
 
   // Scroll to top when article changes
   useEffect(() => {
@@ -43,8 +44,8 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
     setTimeout(() => setCopied(false), 2200);
   };
 
-  // 3 Related articles (all articles except current one)
-  const relatedArticles = ARTICLES.filter((a) => a.id !== article.id);
+  // 3 Related articles
+  const relatedArticles = ARTICLES.filter((a) => a.id !== article.id).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] pb-24">
@@ -66,7 +67,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-stone-700 hover:text-stone-950 transition-colors cursor-pointer py-1 px-2.5 -ml-2.5 rounded-md hover:bg-stone-200/50"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to All 4 Articles</span>
+            <span>Return to All 10 Articles</span>
           </button>
 
           <div className="flex items-center gap-2">
@@ -113,27 +114,33 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
             <Clock className="w-3 h-3 text-stone-400" />
             {article.readTime}
           </span>
+          <span aria-hidden="true" className="text-stone-300">·</span>
+          <span>Folio No. 0{article.id}</span>
         </div>
 
         {/* Article Title */}
-        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-semibold text-stone-900 leading-[1.18] tracking-tight mb-6">
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-semibold text-stone-900 leading-[1.18] tracking-tight mb-4">
           {article.title}
         </h1>
 
+        {/* Subtitle */}
+        {article.subtitle && (
+          <p className="text-lg sm:text-xl text-stone-700 font-serif italic mb-6 leading-relaxed">
+            {article.subtitle}
+          </p>
+        )}
+
         {/* Article Excerpt */}
-        <p className="text-lg sm:text-xl text-stone-600 leading-relaxed font-sans mb-8 max-w-3xl">
+        <p className="text-base sm:text-lg text-stone-600 leading-relaxed font-sans mb-8 max-w-3xl border-l-2 border-stone-300 pl-4">
           {article.excerpt}
         </p>
 
         {/* Author and Publication Date Info */}
         <div className="flex items-center justify-between py-5 border-y border-stone-200/90 mb-10">
           <div className="flex items-center gap-3.5">
-            <img
-              src={article.author.avatar}
-              alt={article.author.name}
-              referrerPolicy="no-referrer"
-              className="w-11 h-11 rounded-full object-cover ring-2 ring-stone-200"
-            />
+            <div className="w-11 h-11 rounded-full bg-stone-800 text-stone-100 flex items-center justify-center font-serif text-sm font-semibold tracking-wider">
+              {article.author.initials}
+            </div>
             <div>
               <div className="text-sm font-semibold text-stone-900">
                 {article.author.name}
@@ -154,15 +161,28 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
           </div>
         </div>
 
-        {/* Large Featured Image */}
+        {/* 1. Large Featured Main Image */}
         <figure className="mb-12">
-          <div className="rounded-2xl overflow-hidden shadow-lg border border-stone-200/80 bg-stone-100 aspect-16/10 sm:aspect-16/9 w-full">
+          <div className="relative group rounded-2xl overflow-hidden shadow-lg border border-stone-200/80 bg-stone-100 aspect-16/10 sm:aspect-16/9 w-full">
             <img
               src={article.image}
               alt={article.imageAlt}
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
+            <button
+              onClick={() =>
+                setActiveModalImage({
+                  url: article.image,
+                  alt: article.imageAlt,
+                  caption: article.imageCaption,
+                })
+              }
+              className="absolute bottom-3 right-3 p-2 bg-stone-900/70 hover:bg-stone-900 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+              title="Expand photograph"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </button>
           </div>
           <figcaption className="text-xs sm:text-sm text-stone-500 italic mt-3 px-1 text-center sm:text-left">
             {article.imageCaption}
@@ -214,7 +234,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
           </blockquote>
         )}
 
-        {/* Formatted Article Content */}
+        {/* Formatted In-Depth Article Content with Sections and Inline Images */}
         <div className="prose-container max-w-3xl mx-auto space-y-12">
           {article.sections.map((section, idx) => (
             <section key={idx} className="space-y-5">
@@ -227,7 +247,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               {section.paragraphs.map((para, pIdx) => (
                 <p
                   key={pIdx}
-                  className={`text-stone-700 text-base sm:text-lg leading-[1.8] font-sans ${
+                  className={`text-stone-700 text-base sm:text-lg leading-[1.85] font-sans ${
                     idx === 0 && pIdx === 0 ? "drop-cap" : ""
                   }`}
                 >
@@ -235,7 +255,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                 </p>
               ))}
 
-              {/* Callout */}
+              {/* Section Callout */}
               {section.callout && (
                 <div className="my-6 p-5 sm:p-6 bg-white rounded-lg border border-stone-200 shadow-sm flex items-start gap-4">
                   <div className="p-2 bg-stone-100 rounded text-amber-900 shrink-0">
@@ -246,19 +266,71 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                   </p>
                 </div>
               )}
+
+              {/* Section Inline Image if present */}
+              {section.inlineImage && (
+                <figure className="my-8">
+                  <div className="rounded-xl overflow-hidden border border-stone-200 shadow-sm aspect-16/9 bg-stone-100">
+                    <img
+                      src={section.inlineImage.url}
+                      alt={section.inlineImage.alt}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <figcaption className="text-xs text-stone-500 italic mt-2.5">
+                    {section.inlineImage.caption}
+                  </figcaption>
+                </figure>
+              )}
             </section>
           ))}
         </div>
 
+        {/* 2 & 3. Dedicated Photographic Plates Section (Multiple Pictures Per Article) */}
+        {article.gallery && article.gallery.length > 0 && (
+          <div className="mt-16 pt-10 border-t border-stone-200">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-amber-900 mb-6">
+              <Camera className="w-4 h-4" />
+              <span>Photographic Plates & Field Documentation</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {article.gallery.map((plate, pIdx) => (
+                <figure
+                  key={pIdx}
+                  className="bg-white p-3 rounded-xl border border-stone-200/90 shadow-sm flex flex-col group cursor-pointer"
+                  onClick={() => setActiveModalImage(plate)}
+                >
+                  <div className="relative aspect-16/10 rounded-lg overflow-hidden bg-stone-100 mb-3">
+                    <img
+                      src={plate.url}
+                      alt={plate.alt}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="px-3 py-1 bg-white/90 text-stone-900 text-xs font-medium rounded-full shadow-sm flex items-center gap-1">
+                        <ZoomIn className="w-3.5 h-3.5" />
+                        <span>Enlarge</span>
+                      </span>
+                    </div>
+                  </div>
+                  <figcaption className="text-xs text-stone-600 leading-relaxed font-sans px-1">
+                    {plate.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* End of article author bio box */}
         <div className="mt-14 pt-8 border-t border-stone-200">
           <div className="bg-white p-6 sm:p-8 rounded-xl border border-stone-200/90 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
-            <img
-              src={article.author.avatar}
-              alt={article.author.name}
-              referrerPolicy="no-referrer"
-              className="w-16 h-16 rounded-full object-cover ring-2 ring-stone-200 shrink-0"
-            />
+            <div className="w-16 h-16 rounded-full bg-stone-800 text-stone-100 flex items-center justify-center font-serif text-xl font-semibold tracking-wider shrink-0 ring-2 ring-stone-200">
+              {article.author.initials}
+            </div>
             <div>
               <div className="text-xs uppercase tracking-wider text-amber-900 font-semibold mb-1">
                 Written by
@@ -267,10 +339,10 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                 {article.author.name}
               </h4>
               <p className="text-sm text-stone-600 leading-relaxed mb-3">
-                {article.author.role}. Overseeing olfactory formulation, rare botanical cultivation, and archival documentation at the Maison Cyprès atelier.
+                {article.author.role}. Investigating olfactory ethnobotany, extraction kinetics, and raw natural essences across Grasse, Florence, and the Mediterranean basin.
               </p>
               <div className="text-xs text-stone-400">
-                Maison Cyprès Haute Parfumerie, Grasse
+                Maison Cyprès Haute Parfumerie, Grasse Atelier
               </div>
             </div>
           </div>
@@ -283,7 +355,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
             className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-stone-900 hover:text-white bg-white hover:bg-stone-900 border border-stone-300 rounded-lg shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Return to Articles</span>
+            <span>Return to All 10 Fragrance Articles</span>
           </button>
         </div>
 
@@ -302,7 +374,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               onClick={onBackToArticles}
               className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-stone-600 hover:text-stone-900 transition-colors"
             >
-              <span>View all 4</span>
+              <span>View all 10</span>
               <ArrowLeft className="w-3.5 h-3.5 rotate-180" />
             </button>
           </div>
@@ -318,6 +390,38 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
           </div>
         </div>
       </article>
+
+      {/* Image Zoom Modal */}
+      {activeModalImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/85 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setActiveModalImage(null)}
+        >
+          <div
+            className="relative max-w-4xl w-full bg-stone-900 rounded-2xl overflow-hidden shadow-2xl p-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative aspect-16/10 sm:aspect-16/9 w-full rounded-xl overflow-hidden bg-black">
+              <img
+                src={activeModalImage.url}
+                alt={activeModalImage.alt}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="p-4 flex items-center justify-between text-stone-300">
+              <p className="text-xs sm:text-sm font-sans italic pr-4">
+                {activeModalImage.caption}
+              </p>
+              <button
+                onClick={() => setActiveModalImage(null)}
+                className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-100 text-xs uppercase tracking-wider font-semibold rounded-md transition-colors cursor-pointer shrink-0"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

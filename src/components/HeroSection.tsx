@@ -16,7 +16,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="max-w-4xl mx-auto text-center space-y-6">
           {/* Subtitle / Heritage Location Marker */}
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-stone-500 py-1 px-3.5 bg-stone-200/60 rounded-full">
-            <span>HAUTE PARFUMERIE • GRASSE & PARIS • EST. 2026</span>
+            <span>HAUTE PARFUMERIE • GRASSE & PARIS • 10 OLFACTORY FOLIOS</span>
           </div>
 
           {/* Main Hero Headline */}
@@ -26,7 +26,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Editorial Subtitle */}
           <p className="text-base sm:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed font-sans">
-            Welcome to the journal of Maison Cyprès. Four investigative essays exploring the dawn harvest of Grasse roses, wild highland vetiver, ancient enfleurage, and scent architecture.
+            Welcome to the journal of Maison Cyprès. Ten in-depth essays illustrated with archival field plates, exploring Grasse roses, Florentine orris root, ancient enfleurage, Assam agarwood, and the physics of distillation.
           </p>
 
           {/* Action Buttons */}
@@ -35,7 +35,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               onClick={onExploreClick}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 text-xs font-semibold uppercase tracking-wider text-white bg-stone-900 hover:bg-stone-800 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer group"
             >
-              <span>Read the 4 Fragrance Articles</span>
+              <span>Explore All 10 Articles</span>
               <ArrowDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-y-0.5" />
             </button>
 

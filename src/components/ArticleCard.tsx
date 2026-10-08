@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, Clock, Image as ImageIcon } from "lucide-react";
 import { Article } from "../data/articles";
 
 interface ArticleCardProps {
@@ -13,6 +13,8 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   onReadMore,
   index = 0,
 }) => {
+  const photoCount = 1 + (article.gallery ? article.gallery.length : 0);
+
   return (
     <article
       onClick={() => onReadMore(article)}
@@ -34,15 +36,21 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           alt={article.imageAlt}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          loading={index < 2 ? "eager" : "lazy"}
+          loading={index < 4 ? "eager" : "lazy"}
         />
         <div className="absolute inset-0 bg-stone-900/5 group-hover:bg-transparent transition-colors duration-300" />
+
+        {/* Small photo count indicator */}
+        <div className="absolute bottom-3 right-3 px-2 py-1 bg-stone-900/60 backdrop-blur-xs text-stone-200 text-[11px] font-medium rounded-md flex items-center gap-1">
+          <ImageIcon className="w-3 h-3 text-stone-300" />
+          <span>{photoCount} Plates</span>
+        </div>
       </div>
 
       {/* Card Content */}
       <div className="flex flex-col flex-1 p-6 sm:p-7">
         {/* Unboxed clean metadata (Zero-Pill discipline) */}
-        <div className="flex items-center gap-2 text-xs font-medium text-stone-500 mb-3 tracking-wide">
+        <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-stone-500 mb-3 tracking-wide">
           <span className="text-amber-900 font-semibold">{article.category}</span>
           <span aria-hidden="true" className="text-stone-300">·</span>
           <span>{article.date}</span>
@@ -66,12 +74,9 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         {/* Card Footer with Author and Read More button */}
         <div className="pt-4 border-t border-stone-100 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <img
-              src={article.author.avatar}
-              alt={article.author.name}
-              referrerPolicy="no-referrer"
-              className="w-7 h-7 rounded-full object-cover ring-1 ring-stone-200"
-            />
+            <div className="w-7 h-7 rounded-full bg-stone-800 text-stone-100 flex items-center justify-center font-serif text-[11px] font-semibold tracking-wider">
+              {article.author.initials}
+            </div>
             <span className="text-xs font-medium text-stone-700">
               {article.author.name}
             </span>
