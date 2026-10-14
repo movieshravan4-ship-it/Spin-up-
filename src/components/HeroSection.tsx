@@ -16,31 +16,33 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="max-w-4xl mx-auto text-center space-y-6">
           {/* Subtitle / Heritage Location Marker */}
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-stone-500 py-1 px-3.5 bg-stone-200/60 rounded-full">
-            <span>HAUTE PARFUMERIE • GRASSE & PARIS • 10 OLFACTORY FOLIOS</span>
+            <span>GRASSE & PARIS • 10 CURATED CHRONICLES</span>
           </div>
 
-          {/* Main Hero Headline */}
+          {/* Main Hero H1 with Primary Keyword */}
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-stone-900 leading-[1.12]">
-            The poetry of botany, distilled into time.
+            French Haute Parfumerie: The Poetry of Botany, Distilled.
           </h1>
 
-          {/* Editorial Subtitle */}
+          {/* Editorial Subtitle with Secondary Keywords */}
           <p className="text-base sm:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed font-sans">
-            Welcome to the journal of Maison Cyprès. Ten in-depth essays illustrated with archival field plates, exploring Grasse roses, Florentine orris root, ancient enfleurage, Assam agarwood, and the physics of distillation.
+            Welcome to the official journal of Maison Cyprès. Explore ten in-depth investigative essays on natural perfume extraits and Grasse botanical fragrances, illustrated with archival field plates from our private ateliers.
           </p>
 
           {/* Action Buttons */}
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={onExploreClick}
+              aria-label="Navigate down to explore all 10 fragrance articles"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 text-xs font-semibold uppercase tracking-wider text-white bg-stone-900 hover:bg-stone-800 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer group"
             >
-              <span>Explore All 10 Articles</span>
+              <span>Explore All 10 Fragrance Articles</span>
               <ArrowDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-y-0.5" />
             </button>
 
             <button
               onClick={onAboutClick}
+              aria-label="Read about the Maison Cyprès philosophy and heritage"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-semibold uppercase tracking-wider text-stone-700 hover:text-stone-950 bg-white hover:bg-stone-100 border border-stone-200 rounded-lg transition-all cursor-pointer"
             >
               <span>The Maison’s Philosophy</span>

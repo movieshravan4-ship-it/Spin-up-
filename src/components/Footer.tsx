@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { ArrowUp, Check } from "lucide-react";
+import { ArrowUp, Check, FileText } from "lucide-react";
 
 interface FooterProps {
   onNavigateHome: () => void;
   onNavigateSection: (sectionId: string) => void;
+  onOpenSeoReport?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigateHome,
   onNavigateSection,
+  onOpenSeoReport,
 }) => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -56,10 +58,12 @@ export const Footer: React.FC<FooterProps> = ({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
+                  aria-label="Email address for fragrance newsletter"
                   className="flex-1 px-4 py-3 text-sm bg-stone-800/90 border border-stone-700 rounded-lg text-stone-100 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
                 />
                 <button
                   type="submit"
+                  aria-label="Subscribe to fragrance newsletter"
                   className="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-stone-950 bg-stone-100 hover:bg-white rounded-lg transition-colors cursor-pointer shrink-0"
                 >
                   Join Circle
@@ -82,7 +86,7 @@ export const Footer: React.FC<FooterProps> = ({
             </p>
           </div>
 
-          <nav className="flex flex-wrap items-center gap-6 text-xs uppercase tracking-wider text-stone-400 font-medium">
+          <nav aria-label="Footer navigation" className="flex flex-wrap items-center gap-6 text-xs uppercase tracking-wider text-stone-400 font-medium">
             <button
               onClick={onNavigateHome}
               className="hover:text-white transition-colors cursor-pointer"
@@ -111,6 +115,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           <button
             onClick={scrollToTop}
+            aria-label="Scroll back to top of page"
             className="inline-flex items-center gap-1.5 text-xs text-stone-400 hover:text-white transition-colors cursor-pointer py-1.5 px-3 rounded bg-stone-800/50 hover:bg-stone-800"
           >
             <span>Top</span>
@@ -118,13 +123,29 @@ export const Footer: React.FC<FooterProps> = ({
           </button>
         </div>
 
-        {/* Legal & Copyright */}
+        {/* Legal & SEO Audit Link */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
           <p>© 2026 Maison Cyprès Haute Parfumerie. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <span className="hover:text-stone-400 transition-colors cursor-pointer">
-              Boutique Salons
-            </span>
+          <div className="flex flex-wrap items-center gap-4">
+            {onOpenSeoReport && (
+              <button
+                onClick={onOpenSeoReport}
+                className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
+                title="View Page-by-Page SEO Keyword Map & Standards"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>SEO & Keyword Map Audit</span>
+              </button>
+            )}
+            <span>·</span>
+            <a
+              href="/sitemap.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-stone-400 transition-colors"
+            >
+              XML Sitemap
+            </a>
             <span>·</span>
             <span className="hover:text-stone-400 transition-colors cursor-pointer">
               Ethical Sourcing Charter
