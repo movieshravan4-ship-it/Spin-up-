@@ -29,12 +29,12 @@ export const SITE_DOMAIN = "https://maisoncypres.fr";
 
 export const HOMEPAGE_SEO: PageSEOConfig = {
   title: "Maison Cyprès — French Haute Parfumerie & Botanical Extraits",
-  metaDescription: "Discover Maison Cyprès, French haute parfumerie handcrafted in Grasse. Explore 10 long-form chronicles on rare botanical harvests and oak-aged perfume extraits.",
+  metaDescription: "Discover Maison Cyprès, French haute parfumerie in Grasse. Explore hand-harvested floral extraits, sessile oak aging, and sustainable botanical sourcing.",
   canonicalUrl: `${SITE_DOMAIN}/`,
   primaryKeyword: "french haute parfumerie",
   secondaryKeywords: ["natural perfume extraits", "grasse botanical fragrances"],
   ogType: "website",
-  ogImage: "/src/assets/images/perfume_grasse_roses_1791344393586.jpg",
+  ogImage: "/src/assets/images/perfume_grasse_roses_1791344393586.webp",
   aeoQuestions: [
     {
       question: "What Defines French Haute Parfumerie at Maison Cyprès?",
@@ -72,7 +72,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 1: Centifolia Rose Harvest",
     currentUrl: "/#article-1",
-    recommendedUrl: "/articles/ghost-of-grasse-centifolia-roses-dawn",
+    recommendedUrl: "/articles/grasse-centifolia-roses",
     primaryKeyword: "rose de mai harvest grasse",
     secondaryKeyword1: "centifolia rose extraction",
     secondaryKeyword2: "grasse perfume flowers",
@@ -81,7 +81,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 2: Wild Vetiver & Petrichor",
     currentUrl: "/#article-2",
-    recommendedUrl: "/articles/alchemy-of-smoke-and-petrichor-wild-vetiver",
+    recommendedUrl: "/articles/wild-vetiver-petrichor",
     primaryKeyword: "wild vetiver distillation",
     secondaryKeyword1: "petrichor fragrance accord",
     secondaryKeyword2: "somali frankincense resin",
@@ -90,7 +90,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 3: Scent Pyramid Architecture",
     currentUrl: "/#article-3",
-    recommendedUrl: "/articles/olfactory-architecture-building-scent-pyramids",
+    recommendedUrl: "/articles/perfume-scent-pyramids",
     primaryKeyword: "perfume scent pyramid structure",
     secondaryKeyword1: "fragrance evaporation kinetics",
     secondaryKeyword2: "top heart base notes",
@@ -99,7 +99,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 4: Cold Enfleurage of Jasmine",
     currentUrl: "/#article-4",
-    recommendedUrl: "/articles/forgotten-extraction-cold-enfleurage-jasmine",
+    recommendedUrl: "/articles/cold-enfleurage-jasmine",
     primaryKeyword: "cold enfleurage jasmine extraction",
     secondaryKeyword1: "traditional grasse enfleurage",
     secondaryKeyword2: "jasminum grandiflorum perfume absolute",
@@ -108,7 +108,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 5: Florentine Iris Pallida",
     currentUrl: "/#article-5",
-    recommendedUrl: "/articles/secret-of-iris-pallida-three-year-underground-maturation",
+    recommendedUrl: "/articles/florentine-iris-pallida",
     primaryKeyword: "florentine orris root butter",
     secondaryKeyword1: "iris pallida rhizome maturation",
     secondaryKeyword2: "irone perfume chemistry",
@@ -117,7 +117,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 6: Ethical Atlantic Ambergris",
     currentUrl: "/#article-6",
-    recommendedUrl: "/articles/sacred-ambergris-floating-gold-oceanic-coasts",
+    recommendedUrl: "/articles/natural-ambergris-perfume",
     primaryKeyword: "ethical beachcombed ambergris",
     secondaryKeyword1: "natural ambergris tincture",
     secondaryKeyword2: "marine perfume fixative",
@@ -126,7 +126,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 7: Citrus Aurantium Neroli",
     currentUrl: "/#article-7",
-    recommendedUrl: "/articles/citrus-aurantium-sacred-distillation-neroli-orange",
+    recommendedUrl: "/articles/citrus-aurantium-neroli",
     primaryKeyword: "neroli bitter orange steam distillation",
     secondaryKeyword1: "citrus aurantium perfume absolutes",
     secondaryKeyword2: "petitgrain extraction grasse",
@@ -135,7 +135,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 8: Wild Assam Agarwood Oud",
     currentUrl: "/#article-8",
-    recommendedUrl: "/articles/oud-of-ancient-valleys-wild-agarwood-maceration",
+    recommendedUrl: "/articles/wild-assam-oud",
     primaryKeyword: "sustainable assam agarwood oud",
     secondaryKeyword1: "natural wild oud oil maceration",
     secondaryKeyword2: "aquilaria resin distillation",
@@ -144,7 +144,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 9: Madagascar Bourbon Vanilla",
     currentUrl: "/#article-9",
-    recommendedUrl: "/articles/vanillin-mirage-wild-bourbon-orchid-pods-madagascar",
+    recommendedUrl: "/articles/madagascar-bourbon-vanilla",
     primaryKeyword: "madagascar bourbon vanilla absolute",
     secondaryKeyword1: "hand pollinated vanilla planifolia",
     secondaryKeyword2: "cured vanilla pod perfumery",
@@ -153,7 +153,7 @@ export const KEYWORD_MAPPING_REPORT: KeywordMapItem[] = [
   {
     pageName: "Article 10: Copper Distillation Alembic",
     currentUrl: "/#article-10",
-    recommendedUrl: "/articles/copper-alembic-physics-low-temperature-fractionation",
+    recommendedUrl: "/articles/copper-alembic-distillation",
     primaryKeyword: "copper alembic still perfume distillation",
     secondaryKeyword1: "low temperature vacuum fractionation",
     secondaryKeyword2: "essential oil distillation kinetics",

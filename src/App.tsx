@@ -40,7 +40,9 @@ export default function App() {
     // Check pathname: /articles/:slug
     if (path.startsWith("/articles/")) {
       const slug = path.replace("/articles/", "").replace(/\/$/, "");
-      const found = ARTICLES.find((a) => a.slug === slug || a.id === slug);
+      const found = ARTICLES.find(
+        (a) => a.slug === slug || a.id === slug || a.legacySlugs?.includes(slug)
+      );
       if (found) {
         setSelectedArticle(found);
         return;
@@ -50,7 +52,9 @@ export default function App() {
     // Check hash fallback: #article-:id or #article-:slug
     if (hash.startsWith("#article-")) {
       const identifier = hash.replace("#article-", "");
-      const found = ARTICLES.find((a) => a.id === identifier || a.slug === identifier);
+      const found = ARTICLES.find(
+        (a) => a.id === identifier || a.slug === identifier || a.legacySlugs?.includes(identifier)
+      );
       if (found) {
         setSelectedArticle(found);
         return;

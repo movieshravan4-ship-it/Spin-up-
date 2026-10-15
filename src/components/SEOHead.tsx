@@ -43,7 +43,12 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
     };
 
     // 3. Set Standard & Social Meta Tags
+    const keywords = article
+      ? [article.primaryKeyword, ...article.secondaryKeywords].join(", ")
+      : [HOMEPAGE_SEO.primaryKeyword, ...HOMEPAGE_SEO.secondaryKeywords].join(", ");
+
     setMetaTag("name", "description", description);
+    setMetaTag("name", "keywords", keywords);
     setCanonical(canonical);
 
     // OpenGraph
@@ -99,7 +104,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
               "name": "Maison Cyprès",
               "logo": {
                 "@type": "ImageObject",
-                "url": `${SITE_DOMAIN}/src/assets/images/perfume_flacon_travertine_1791344422337.jpg`
+                "url": `${SITE_DOMAIN}/src/assets/images/perfume_flacon_travertine_1791344422337.webp`
               }
             },
             "mainEntityOfPage": {
@@ -157,7 +162,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
             "@id": `${SITE_DOMAIN}/#organization`,
             "name": "Maison Cyprès",
             "url": SITE_DOMAIN,
-            "logo": `${SITE_DOMAIN}/src/assets/images/perfume_flacon_travertine_1791344422337.jpg`,
+            "logo": `${SITE_DOMAIN}/src/assets/images/perfume_flacon_travertine_1791344422337.webp`,
             "foundingDate": "2026",
             "founders": [
               {
