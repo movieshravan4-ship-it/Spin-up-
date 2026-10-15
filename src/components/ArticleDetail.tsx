@@ -47,6 +47,16 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
     setTimeout(() => setCopied(false), 2200);
   };
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.currentTarget;
+    if (!target.dataset.fallback) {
+      target.dataset.fallback = "1";
+      if (target.src.endsWith(".webp")) {
+        target.src = target.src.replace(/\.webp$/, ".jpg");
+      }
+    }
+  };
+
   // 3 Related articles
   const relatedArticles = ARTICLES.filter((a) => a.id !== article.id).slice(0, 3);
 
@@ -206,6 +216,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               loading="eager"
               decoding="sync"
               referrerPolicy="no-referrer"
+              onError={handleImageError}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
             <button
@@ -318,6 +329,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                       loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"
+                      onError={handleImageError}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -361,6 +373,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                       loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"
+                      onError={handleImageError}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -464,6 +477,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                 alt={activeModalImage.alt}
                 width={1280}
                 height={720}
+                onError={handleImageError}
                 className="w-full h-full object-contain"
               />
             </div>

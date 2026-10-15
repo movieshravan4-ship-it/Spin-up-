@@ -34,7 +34,7 @@ export const HOMEPAGE_SEO: PageSEOConfig = {
   primaryKeyword: "french haute parfumerie",
   secondaryKeywords: ["natural perfume extraits", "grasse botanical fragrances"],
   ogType: "website",
-  ogImage: "/src/assets/images/perfume_grasse_roses_1791344393586.webp",
+  ogImage: "/images/perfume_grasse_roses_1791344393586.webp",
   aeoQuestions: [
     {
       question: "What Defines French Haute Parfumerie at Maison Cyprès?",

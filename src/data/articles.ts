@@ -67,17 +67,17 @@ export const ARTICLES: Article[] = [
       role: "Master Perfumer, Grasse Atelier",
       initials: "HM",
     },
-    image: "/src/assets/images/perfume_grasse_roses_1791344393586.webp",
+    image: "/images/perfume_grasse_roses_1791344393586.webp",
     imageAlt: "Rosa centifolia dawn harvest in Grasse with crystal perfume flacon on travertine limestone",
     imageCaption: "Rosa × centifolia gathered at the Maison Cyprès estate in Grasse, distilled within four hours of dawn harvest.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_rose_petals_macro_1791430401179.webp",
+        url: "/images/perfume_rose_petals_macro_1791430401179.webp",
         alt: "Dewy fresh pink Centifolia rose petals with morning condensation drops during Grasse harvest",
         caption: "Fig. 1 — Extreme macro detail of glandular trichomes on Rosa centifolia petals, where volatile aromatic terpenes reside.",
       },
       {
-        url: "/src/assets/images/perfume_harvest_basket_field_1791430450128.webp",
+        url: "/images/perfume_harvest_basket_field_1791430450128.webp",
         alt: "Wicker harvest basket filled with blossoms in morning field above Grasse",
         caption: "Fig. 2 — Handwoven willow hampers filled at 6:15 AM on the sun-warmed terraces above Mouans-Sartoux.",
       }
@@ -134,7 +134,7 @@ export const ARTICLES: Article[] = [
           "The chemical composition of our extract reveals unusually high concentrations of geraniol and nerol, compounds that grant our formula its velvety, nectar-like persistence without needing synthetic musks to anchor the drydown."
         ],
         inlineImage: {
-          url: "/src/assets/images/perfume_alembic_copper_coil_1791430414672.webp",
+          url: "/images/perfume_alembic_copper_coil_1791430414672.webp",
           alt: "Copper condensing coil and collection flask with clear rose distillate",
           caption: "Fig. 3 — Low-pressure fractionated distillation capturing the aqueous hydrosol without heat stress.",
         }
@@ -170,17 +170,17 @@ export const ARTICLES: Article[] = [
       role: "Botanical Scout & Senior Nose",
       initials: "GL",
     },
-    image: "/src/assets/images/perfume_vetiver_resins_1791344410697.webp",
+    image: "/images/perfume_vetiver_resins_1791344410697.webp",
     imageAlt: "Wild vetiver roots and golden Somali frankincense resin with dark luxury perfume bottle",
     imageCaption: "Aged vetiver roots macerating with tears of Boswellia carterii resin over twelve months in dark flacons.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_amber_resin_tears_1791430467242.webp",
+        url: "/images/perfume_amber_resin_tears_1791430467242.webp",
         alt: "Somali frankincense resin tears glowing on dark rock",
         caption: "Fig. 1 — Tears of Boswellia carterii harvested from ancient wild trees clinging to limestone escarpments in Somaliland.",
       },
       {
-        url: "/src/assets/images/perfume_glass_dropper_pipette_1791430478680.webp",
+        url: "/images/perfume_glass_dropper_pipette_1791430478680.webp",
         alt: "Glass pipette dispensing dark golden vetiver resinous extract",
         caption: "Fig. 2 — Laboratory evaluation of raw Haitian vetiver oil, testing sesquiterpene density and root bitterness.",
       }
@@ -237,7 +237,7 @@ export const ARTICLES: Article[] = [
           "We source our resin tears exclusively through direct cooperative agreements with the clan elders of the Sanaag region, ensuring that trees are tapped only once every three seasons to prevent fatal exhaustion of these ancient desert monarchs."
         ],
         inlineImage: {
-          url: "/src/assets/images/perfume_blotter_testing_nose_1791430431511.webp",
+          url: "/images/perfume_blotter_testing_nose_1791430431511.webp",
           alt: "Perfumer testing organ desk with blotter strips",
           caption: "Fig. 3 — Evaluating test strips over 72 hours to measure how birch tar smokiness moderates the raw vetiver heart.",
         }
@@ -273,17 +273,17 @@ export const ARTICLES: Article[] = [
       role: "Director of Olfactory Creation",
       initials: "CV",
     },
-    image: "/src/assets/images/perfume_flacon_travertine_1791344422337.webp",
+    image: "/images/perfume_flacon_travertine_1791344422337.webp",
     imageAlt: "Square crystal perfume flacon illustrating scent pyramid top heart base notes on travertine",
     imageCaption: "Maison Cyprès flacons are crafted from optical-grade recycled crystal with magnetic brass caps.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_blotter_testing_nose_1791430431511.webp",
+        url: "/images/perfume_blotter_testing_nose_1791430431511.webp",
         alt: "Perfumer organ desk evaluating evaporation kinetics on paper scent strips",
         caption: "Fig. 1 — The formulation organ where hundreds of single-origin distillates are evaluated at precise molar ratios.",
       },
       {
-        url: "/src/assets/images/perfume_glass_dropper_pipette_1791430478680.webp",
+        url: "/images/perfume_glass_dropper_pipette_1791430478680.webp",
         alt: "Laboratory pipette dispensing golden extrait for scent pyramid testing",
         caption: "Fig. 2 — Compounding test batches at 30% concentration to calibrate evaporation curves on human pulse points.",
       }
@@ -340,7 +340,7 @@ export const ARTICLES: Article[] = [
           "In Cèdre Éthéré, we balance top heart base notes using Moroccan cedarwood needles paired with steam-distilled Chinese black tea to create a dry, smoky floral heart that wears like a tailored vicuña coat on the skin."
         ],
         inlineImage: {
-          url: "/src/assets/images/perfume_copper_still_atelier_1791430370728.webp",
+          url: "/images/perfume_copper_still_atelier_1791430370728.webp",
           alt: "Historic copper stills and glass coils in perfume laboratory",
           caption: "Fig. 3 — Fractionating high-boiling heart molecules to eliminate sulfurous off-notes in natural botanicals.",
         }
@@ -376,17 +376,17 @@ export const ARTICLES: Article[] = [
       role: "Fragrance Historian & Archivist",
       initials: "JC",
     },
-    image: "/src/assets/images/perfume_jasmine_enfleurage_1791344441824.webp",
+    image: "/images/perfume_jasmine_enfleurage_1791344441824.webp",
     imageAlt: "Jasminum grandiflorum blossoms with perfume flacon on linen illustrating cold enfleurage",
     imageCaption: "Pure Jasminum grandiflorum blossoms laid onto glass chassis in the Maison Cyprès historical cellar.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_harvest_basket_field_1791430450128.webp",
+        url: "/images/perfume_harvest_basket_field_1791430450128.webp",
         alt: "White jasmine blossoms gathered at dusk for traditional Grasse enfleurage",
         caption: "Fig. 1 — Nocturnal jasmine blossoms gathered at dusk, when their indol concentration reaches nocturnal zenith.",
       },
       {
-        url: "/src/assets/images/perfume_alembic_copper_coil_1791430414672.webp",
+        url: "/images/perfume_alembic_copper_coil_1791430414672.webp",
         alt: "Laboratory filtration setup extracting jasmine absolute from pomade",
         caption: "Fig. 2 — Chilled organic ethanol washing of saturated pomade to isolate the pure floral absolute.",
       }
@@ -467,17 +467,17 @@ export const ARTICLES: Article[] = [
       role: "Director of Olfactory Creation",
       initials: "CV",
     },
-    image: "/src/assets/images/perfume_orris_root_florence_1791430293113.webp",
+    image: "/images/perfume_orris_root_florence_1791430293113.webp",
     imageAlt: "Florentine orris root butter and dried Iris pallida rhizomes with luxury perfume bottle",
     imageCaption: "Iris pallida rhizomes harvested from the hills of San Polo in Chianti, aged for thirty-six months before grinding.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_amber_resin_tears_1791430467242.webp",
+        url: "/images/perfume_amber_resin_tears_1791430467242.webp",
         alt: "Ground Florentine iris rhizome powder displaying crystalline irone formations",
         caption: "Fig. 1 — Ground iris rhizome powder displaying crystalline irone formations under raking studio light.",
       },
       {
-        url: "/src/assets/images/perfume_blotter_testing_nose_1791430431511.webp",
+        url: "/images/perfume_blotter_testing_nose_1791430431511.webp",
         alt: "Evaluating orris butter dilution on scent paper blotters",
         caption: "Fig. 2 — Testing 1% orris butter dilution: powdery violet, soft suede, and cool silver-toned starch notes.",
       }
@@ -534,7 +534,7 @@ export const ARTICLES: Article[] = [
           "At Maison Cyprès, we reject synthetic orris substitutes like ionones and methyl ionones. While synthetics can mimic the initial violet punch, they lack the three-dimensional, skin-melting warmth and velvety sillage that only genuine aged orris butter can impart."
         ],
         inlineImage: {
-          url: "/src/assets/images/perfume_glass_dropper_pipette_1791430478680.webp",
+          url: "/images/perfume_glass_dropper_pipette_1791430478680.webp",
           alt: "Dropper dispensing dense golden orris extract",
           caption: "Fig. 3 — Pure orris butter dissolved at 50°C into warm neutral alcohol before incorporation into extrait batches.",
         }
@@ -563,17 +563,17 @@ export const ARTICLES: Article[] = [
       role: "Botanical Scout & Senior Nose",
       initials: "GL",
     },
-    image: "/src/assets/images/perfume_ambergris_ocean_stone_1791430307589.webp",
+    image: "/images/perfume_ambergris_ocean_stone_1791430307589.webp",
     imageAlt: "Ethical beachcombed ambergris nodule and maritime perfume bottle on Atlantic granite",
     imageCaption: "Grey ambergris tincture prepared from beach-gathered nodules found on the windswept Atlantic coast of Brittany.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_glass_dropper_pipette_1791430478680.webp",
+        url: "/images/perfume_glass_dropper_pipette_1791430478680.webp",
         alt: "Pipette testing marine natural ambergris tincture in glass beaker",
         caption: "Fig. 1 — Macerating genuine ambergris tincture at 3% concentration in aged organic alcohol over eighteen months.",
       },
       {
-        url: "/src/assets/images/perfume_blotter_testing_nose_1791430431511.webp",
+        url: "/images/perfume_blotter_testing_nose_1791430431511.webp",
         alt: "Testing maritime salty marine perfume fixative on scent paper",
         caption: "Fig. 2 — Olfactory evaluation: notes of ocean breeze, warm skin, tobacco leaf, and mineral driftwood.",
       }
@@ -654,17 +654,17 @@ export const ARTICLES: Article[] = [
       role: "Master Perfumer, Grasse Atelier",
       initials: "HM",
     },
-    image: "/src/assets/images/perfume_neroli_blossoms_copper_1791430326838.webp",
+    image: "/images/perfume_neroli_blossoms_copper_1791430326838.webp",
     imageAlt: "White bitter orange neroli blossoms beside hand-hammered copper distillation alembic",
     imageCaption: "Bitter orange blossoms harvested in Vallauris, distilled in traditional copper alembics within six hours of picking.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_alembic_copper_coil_1791430414672.webp",
+        url: "/images/perfume_alembic_copper_coil_1791430414672.webp",
         alt: "Vintage copper distillation coil condensing neroli hydrosol",
         caption: "Fig. 1 — Steam separating the precious floral neroli oil from the sweet orange flower water (hydrosol).",
       },
       {
-        url: "/src/assets/images/perfume_harvest_basket_field_1791430450128.webp",
+        url: "/images/perfume_harvest_basket_field_1791430450128.webp",
         alt: "Wicker basket with white orange blossoms in Mediterranean sun",
         caption: "Fig. 2 — Canvas drop-cloths spread under ancient bitter orange trees to catch freshly fallen blossoms in April.",
       }
@@ -744,17 +744,17 @@ export const ARTICLES: Article[] = [
       role: "Botanical Scout & Senior Nose",
       initials: "GL",
     },
-    image: "/src/assets/images/perfume_oud_agarwood_flacon_1791430339594.webp",
+    image: "/images/perfume_oud_agarwood_flacon_1791430339594.webp",
     imageAlt: "Sustainable Assam agarwood chips with smoked glass luxury perfume flacon",
     imageCaption: "Aged Assam oud oil resting in dark carboys after twelve months of anaerobic cellar maceration.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_amber_resin_tears_1791430467242.webp",
+        url: "/images/perfume_amber_resin_tears_1791430467242.webp",
         alt: "Resinous dark agarwood chips with golden veins from Assam",
         caption: "Fig. 1 — Close-up of resin-saturated heartwood chips from sixty-year-old Aquilaria agallocha trees.",
       },
       {
-        url: "/src/assets/images/perfume_glass_dropper_pipette_1791430478680.webp",
+        url: "/images/perfume_glass_dropper_pipette_1791430478680.webp",
         alt: "Dark thick natural oud oil extract dripping into measuring flacon",
         caption: "Fig. 2 — Testing the viscosity and sesquiterpene resin balance of aged Indian hydro-distilled oud.",
       }
@@ -834,17 +834,17 @@ export const ARTICLES: Article[] = [
       role: "Director of Olfactory Creation",
       initials: "CV",
     },
-    image: "/src/assets/images/perfume_bourbon_vanilla_pods_1791430355068.webp",
+    image: "/images/perfume_bourbon_vanilla_pods_1791430355068.webp",
     imageAlt: "Madagascar Bourbon vanilla pods and tonka beans with glowing amber perfume flacon",
     imageCaption: "Hand-pollinated Vanilla planifolia pods cured over nine months in the Sava region of Madagascar.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_glass_dropper_pipette_1791430478680.webp",
+        url: "/images/perfume_glass_dropper_pipette_1791430478680.webp",
         alt: "Dark brown natural Bourbon vanilla absolute being measured with glass dropper",
         caption: "Fig. 1 — Pure dark Bourbon vanilla absolute, displaying over 250 volatile aromatic molecules beyond simple vanillin.",
       },
       {
-        url: "/src/assets/images/perfume_blotter_testing_nose_1791430431511.webp",
+        url: "/images/perfume_blotter_testing_nose_1791430431511.webp",
         alt: "Scent strips testing cured vanilla pods paired with smoked amber and cedar",
         caption: "Fig. 2 — Evaluating vanilla's balsamic drydown against Haitian vetiver to prevent excessive sugary sweetness.",
       }
@@ -925,17 +925,17 @@ export const ARTICLES: Article[] = [
       role: "Fragrance Historian & Archivist",
       initials: "JC",
     },
-    image: "/src/assets/images/perfume_copper_still_atelier_1791430370728.webp",
+    image: "/images/perfume_copper_still_atelier_1791430370728.webp",
     imageAlt: "Hand-hammered vintage copper alembic still in historic Grasse perfume laboratory",
     imageCaption: "Hand-hammered red copper stills dating to 1892, restored and calibrated for low-pressure steam distillation in Grasse.",
     gallery: [
       {
-        url: "/src/assets/images/perfume_alembic_copper_coil_1791430414672.webp",
+        url: "/images/perfume_alembic_copper_coil_1791430414672.webp",
         alt: "Copper condensing coil and collection flask with clear distillate",
         caption: "Fig. 1 — The condensing coil (serpentin) immersed in chilled mountain spring water to rapidly condense floral vapors.",
       },
       {
-        url: "/src/assets/images/perfume_glass_dropper_pipette_1791430478680.webp",
+        url: "/images/perfume_glass_dropper_pipette_1791430478680.webp",
         alt: "Testing distillate fractions in crystal laboratory receiver",
         caption: "Fig. 2 — Hydrometer testing of distillate density, separating head, heart, and tail fractions of steam extractions.",
       }

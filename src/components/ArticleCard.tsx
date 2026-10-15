@@ -39,6 +39,15 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           width={640}
           height={360}
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (!target.dataset.fallback) {
+              target.dataset.fallback = "1";
+              if (target.src.endsWith(".webp")) {
+                target.src = target.src.replace(/\.webp$/, ".jpg");
+              }
+            }
+          }}
           className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           loading={index < 2 ? "eager" : "lazy"}
           decoding={index < 2 ? "sync" : "async"}
