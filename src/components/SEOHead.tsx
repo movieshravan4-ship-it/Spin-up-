@@ -4,21 +4,26 @@ import { HOMEPAGE_SEO, SITE_DOMAIN } from "../data/seoData";
 
 interface SEOHeadProps {
   article: Article | null;
+  isNotFound?: boolean;
 }
 
-export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
+export const SEOHead: React.FC<SEOHeadProps> = ({ article, isNotFound = false }) => {
   useEffect(() => {
-    // 1. Determine Title & Meta Description
-    const title = article ? article.seoTitle : HOMEPAGE_SEO.title;
-    const description = article ? article.metaDescription : HOMEPAGE_SEO.metaDescription;
-    const canonical = article ? article.canonicalUrl : HOMEPAGE_SEO.canonicalUrl;
-    const ogImage = article
-      ? window.location.origin + article.image
-      : window.location.origin + HOMEPAGE_SEO.ogImage;
-    const ogType = article ? "article" : "website";
+    // 1. Resolve self-referencing canonical URL
+    const origin = typeof window !== "undefined" && window.location.origin
+      ? window.location.origin
+      : SITE_DOMAIN;
+    const pathname = typeof window !== "undefined" && window.location.pathname
+      ? window.location.pathname
+      : "/";
 
-    // 2. Update Document Title
-    document.title = title;
+    // Self-referencing canonical tag href for the current page
+    let canonical = `${origin}${pathname}`;
+    if (article) {
+      canonical = `${origin}/articles/${article.slug}`;
+    } else if (!isNotFound && pathname === "/") {
+      canonical = `${origin}/`;
+    }
 
     // Helper to update or create meta tags
     const setMetaTag = (nameAttr: "name" | "property", key: string, content: string) => {
@@ -42,16 +47,41 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
       link.setAttribute("href", href);
     };
 
-    // 3. Set Standard & Social Meta Tags
+    // 2. Handle 404 state
+    if (isNotFound) {
+      document.title = "Page Not Found (404) — Maison Cyprès";
+      setMetaTag("name", "robots", "noindex, follow");
+      setMetaTag("name", "description", "The requested fragrance page or archive could not be found.");
+      setCanonical(canonical);
+      return;
+    }
+
+    // 3. Regular Page SEO Resolution
+    const title = article ? article.seoTitle : HOMEPAGE_SEO.title;
+    const description = article ? article.metaDescription : HOMEPAGE_SEO.metaDescription;
+    const ogImage = article
+      ? `${origin}${article.image}`
+      : `${origin}${HOMEPAGE_SEO.ogImage}`;
+    const ogType = article ? "article" : "website";
+
+    // Update document title
+    document.title = title;
+
+    // Reset standard robots directive for indexable pages
+    setMetaTag("name", "robots", "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1");
+
+    // Set self-referencing canonical tag
+    setCanonical(canonical);
+
+    // Set meta description & keywords
     const keywords = article
       ? [article.primaryKeyword, ...article.secondaryKeywords].join(", ")
       : [HOMEPAGE_SEO.primaryKeyword, ...HOMEPAGE_SEO.secondaryKeywords].join(", ");
 
     setMetaTag("name", "description", description);
     setMetaTag("name", "keywords", keywords);
-    setCanonical(canonical);
 
-    // OpenGraph
+    // OpenGraph Tags
     setMetaTag("property", "og:title", title);
     setMetaTag("property", "og:description", description);
     setMetaTag("property", "og:url", canonical);
@@ -59,7 +89,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
     setMetaTag("property", "og:type", ogType);
     setMetaTag("property", "og:site_name", "Maison Cyprès");
 
-    // Twitter Card
+    // Twitter Card Tags
     setMetaTag("name", "twitter:card", "summary_large_image");
     setMetaTag("name", "twitter:title", title);
     setMetaTag("name", "twitter:description", description);
@@ -82,18 +112,18 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
         "@graph": [
           {
             "@type": "Article",
-            "@id": `${article.canonicalUrl}#article`,
+            "@id": `${canonical}#article`,
             "isPartOf": {
               "@type": "WebSite",
-              "@id": `${SITE_DOMAIN}/#website`,
+              "@id": `${origin}/#website`,
               "name": "Maison Cyprès",
-              "url": SITE_DOMAIN
+              "url": origin
             },
             "headline": article.title,
             "description": article.metaDescription,
             "image": ogImage,
             "datePublished": "2026-08-01T08:00:00+02:00",
-            "dateModified": "2026-10-14T09:00:00+02:00",
+            "dateModified": "2026-10-24T09:00:00+02:00",
             "author": {
               "@type": "Person",
               "name": article.author.name,
@@ -104,42 +134,42 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
               "name": "Maison Cyprès",
               "logo": {
                 "@type": "ImageObject",
-                "url": `${SITE_DOMAIN}/images/perfume_flacon_travertine_1791344422337.webp`
+                "url": `${origin}/images/perfume_flacon_travertine_1791344422337.webp`
               }
             },
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": article.canonicalUrl
+              "@id": canonical
             },
             "keywords": [article.primaryKeyword, ...article.secondaryKeywords].join(", ")
           },
           {
             "@type": "BreadcrumbList",
-            "@id": `${article.canonicalUrl}#breadcrumb`,
+            "@id": `${canonical}#breadcrumb`,
             "itemListElement": [
               {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": SITE_DOMAIN
+                "item": origin
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Articles",
-                "item": `${SITE_DOMAIN}/#articles`
+                "item": `${origin}/#articles`
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": article.title,
-                "item": article.canonicalUrl
+                "item": canonical
               }
             ]
           },
           {
             "@type": "FAQPage",
-            "@id": `${article.canonicalUrl}#faq`,
+            "@id": `${canonical}#faq`,
             "mainEntity": article.aeoQuestions.map((q) => ({
               "@type": "Question",
               "name": q.question,
@@ -159,10 +189,10 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
         "@graph": [
           {
             "@type": "Organization",
-            "@id": `${SITE_DOMAIN}/#organization`,
+            "@id": `${origin}/#organization`,
             "name": "Maison Cyprès",
-            "url": SITE_DOMAIN,
-            "logo": `${SITE_DOMAIN}/images/perfume_flacon_travertine_1791344422337.webp`,
+            "url": origin,
+            "logo": `${origin}/images/perfume_flacon_travertine_1791344422337.webp`,
             "foundingDate": "2026",
             "founders": [
               {
@@ -181,17 +211,17 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
           },
           {
             "@type": "WebSite",
-            "@id": `${SITE_DOMAIN}/#website`,
-            "url": SITE_DOMAIN,
+            "@id": `${origin}/#website`,
+            "url": origin,
             "name": "Maison Cyprès — Haute Parfumerie",
             "description": HOMEPAGE_SEO.metaDescription,
             "publisher": {
-              "@id": `${SITE_DOMAIN}/#organization`
+              "@id": `${origin}/#organization`
             }
           },
           {
             "@type": "FAQPage",
-            "@id": `${SITE_DOMAIN}/#faq`,
+            "@id": `${origin}/#faq`,
             "mainEntity": HOMEPAGE_SEO.aeoQuestions.map((q) => ({
               "@type": "Question",
               "name": q.question,
@@ -212,7 +242,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ article }) => {
       const s = document.getElementById("seo-json-ld");
       if (s) s.remove();
     };
-  }, [article]);
+  }, [article, isNotFound]);
 
   return null;
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ArrowLeft, Clock, Share2, Check, Bookmark, Sparkles, Camera, ZoomIn, ChevronRight, Home } from "lucide-react";
+import { ArrowLeft, Clock, Share2, Check, Bookmark, Sparkles, Camera, ZoomIn, ChevronRight, Home, X } from "lucide-react";
 import { Article, ARTICLES, ArticleImage } from "../data/articles";
 import { ArticleCard } from "./ArticleCard";
 import { AEOSection } from "./AEOSection";
@@ -27,6 +27,17 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [article.id]);
 
+  // Handle Escape key to close image modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && activeModalImage) {
+        setActiveModalImage(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeModalImage]);
+
   // Track reading progress
   useEffect(() => {
     const handleScroll = () => {
@@ -49,10 +60,18 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.currentTarget;
-    if (!target.dataset.fallback) {
-      target.dataset.fallback = "1";
+    if (!target.dataset.fallbackWebp) {
+      target.dataset.fallbackWebp = "1";
       if (target.src.endsWith(".webp")) {
         target.src = target.src.replace(/\.webp$/, ".jpg");
+        return;
+      }
+    }
+    if (!target.dataset.fallbackAsset) {
+      target.dataset.fallbackAsset = "1";
+      if (target.src.includes("/images/")) {
+        target.src = target.src.replace("/images/", "/assets/images/");
+        return;
       }
     }
   };
@@ -206,7 +225,28 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
 
         {/* 1. Large Featured Main Image */}
         <figure className="mb-12">
-          <div className="relative group rounded-2xl overflow-hidden shadow-lg border border-stone-200/80 bg-stone-100 aspect-16/10 sm:aspect-16/9 w-full">
+          <div
+            onClick={() =>
+              setActiveModalImage({
+                url: article.image,
+                alt: article.imageAlt,
+                caption: article.imageCaption,
+              })
+            }
+            className="relative group rounded-2xl overflow-hidden shadow-lg border border-stone-200/80 bg-stone-100 aspect-16/10 sm:aspect-16/9 w-full cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                setActiveModalImage({
+                  url: article.image,
+                  alt: article.imageAlt,
+                  caption: article.imageCaption,
+                });
+              }
+            }}
+            aria-label="Click to enlarge main photograph in high definition"
+          >
             <img
               src={article.image}
               alt={article.imageAlt}
@@ -219,20 +259,10 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               onError={handleImageError}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
-            <button
-              onClick={() =>
-                setActiveModalImage({
-                  url: article.image,
-                  alt: article.imageAlt,
-                  caption: article.imageCaption,
-                })
-              }
-              className="absolute bottom-3 right-3 p-2 bg-stone-900/70 hover:bg-stone-900 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-              title="Expand photograph in high definition"
-              aria-label="Expand image view"
-            >
-              <ZoomIn className="w-4 h-4" />
-            </button>
+            <div className="absolute bottom-3 right-3 px-3 py-1.5 bg-stone-900/70 hover:bg-stone-900 text-white rounded-lg opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 text-xs font-medium">
+              <ZoomIn className="w-3.5 h-3.5" />
+              <span>Click to Enlarge</span>
+            </div>
           </div>
           <figcaption className="text-xs sm:text-sm text-stone-500 italic mt-3 px-1 text-center sm:text-left">
             {article.imageCaption}
@@ -320,7 +350,18 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               {/* Section Inline Image if present */}
               {section.inlineImage && (
                 <figure className="my-8">
-                  <div className="rounded-xl overflow-hidden border border-stone-200 shadow-sm aspect-16/9 bg-stone-100">
+                  <div
+                    onClick={() => setActiveModalImage(section.inlineImage!)}
+                    className="relative group rounded-xl overflow-hidden border border-stone-200 shadow-sm aspect-16/9 bg-stone-100 cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        setActiveModalImage(section.inlineImage!);
+                      }
+                    }}
+                    aria-label="Click to enlarge section photograph"
+                  >
                     <img
                       src={section.inlineImage.url}
                       alt={section.inlineImage.alt}
@@ -330,8 +371,12 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                       decoding="async"
                       referrerPolicy="no-referrer"
                       onError={handleImageError}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     />
+                    <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-stone-900/70 hover:bg-stone-900 text-white rounded-md opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-[11px] font-medium">
+                      <ZoomIn className="w-3 h-3" />
+                      <span>Enlarge</span>
+                    </div>
                   </div>
                   <figcaption className="text-xs text-stone-500 italic mt-2.5">
                     {section.inlineImage.caption}
@@ -461,36 +506,65 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
       {/* Image Zoom Modal */}
       {activeModalImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/85 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/90 backdrop-blur-md animate-in fade-in duration-200"
           onClick={() => setActiveModalImage(null)}
           role="dialog"
           aria-modal="true"
           aria-label="Enlarged photographic plate view"
         >
           <div
-            className="relative max-w-4xl w-full bg-stone-900 rounded-2xl overflow-hidden shadow-2xl p-2"
+            className="relative max-w-5xl w-full bg-stone-900 rounded-2xl overflow-hidden shadow-2xl p-2.5 sm:p-3 flex flex-col max-h-[92vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative aspect-16/10 sm:aspect-16/9 w-full rounded-xl overflow-hidden bg-black">
+            {/* Top Bar with Title and Close X */}
+            <div className="flex items-center justify-between px-3 py-2 text-stone-300 border-b border-stone-800">
+              <span className="text-xs uppercase tracking-wider text-amber-400 font-semibold flex items-center gap-1.5">
+                <Camera className="w-3.5 h-3.5" />
+                <span>Photographic Plate Archive</span>
+              </span>
+              <button
+                onClick={() => setActiveModalImage(null)}
+                className="p-1.5 text-stone-400 hover:text-white rounded-full hover:bg-stone-800 transition-colors cursor-pointer"
+                aria-label="Close enlarged plate view (Press Escape)"
+                title="Close (Esc)"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* High-res Image Container */}
+            <div className="relative aspect-16/10 sm:aspect-16/9 w-full rounded-xl overflow-hidden bg-black/90 my-2 flex items-center justify-center">
               <img
                 src={activeModalImage.url}
                 alt={activeModalImage.alt}
                 width={1280}
                 height={720}
                 onError={handleImageError}
-                className="w-full h-full object-contain"
+                className="max-h-[70vh] w-full object-contain"
               />
             </div>
-            <div className="p-4 flex items-center justify-between text-stone-300">
-              <p className="text-xs sm:text-sm font-sans italic pr-4">
+
+            {/* Bottom Caption and Controls */}
+            <div className="p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-stone-300 border-t border-stone-800">
+              <p className="text-xs sm:text-sm font-sans italic pr-2 text-stone-300">
                 {activeModalImage.caption}
               </p>
-              <button
-                onClick={() => setActiveModalImage(null)}
-                className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-100 text-xs uppercase tracking-wider font-semibold rounded-md transition-colors cursor-pointer shrink-0"
-              >
-                Close
-              </button>
+              <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                <a
+                  href={activeModalImage.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white text-xs uppercase tracking-wider font-semibold rounded-md transition-colors"
+                >
+                  Full Res
+                </a>
+                <button
+                  onClick={() => setActiveModalImage(null)}
+                  className="px-3.5 py-1.5 bg-stone-100 hover:bg-white text-stone-900 text-xs uppercase tracking-wider font-semibold rounded-md transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

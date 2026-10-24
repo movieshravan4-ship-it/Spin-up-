@@ -7,6 +7,7 @@ import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
 import { ArticleCard } from "./components/ArticleCard";
 import { ArticleDetail } from "./components/ArticleDetail";
+import { NotFoundPage } from "./components/NotFoundPage";
 import { AboutSection } from "./components/AboutSection";
 import { ContactSection } from "./components/ContactSection";
 import { Footer } from "./components/Footer";
@@ -15,6 +16,7 @@ import { Sparkles, Filter, X, Table } from "lucide-react";
 
 export default function App() {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [isNotFound, setIsNotFound] = useState(false);
   const [isDiscoveryOpen, setIsDiscoveryOpen] = useState(false);
   const [isSeoReportOpen, setIsSeoReportOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -37,7 +39,15 @@ export default function App() {
     const path = window.location.pathname;
     const hash = window.location.hash;
 
-    // Check pathname: /articles/:slug
+    // 1. Client-side 301 redirect handler for /old-home -> /
+    if (path === "/old-home") {
+      window.history.replaceState(null, "", "/");
+      setSelectedArticle(null);
+      setIsNotFound(false);
+      return;
+    }
+
+    // 2. Check pathname: /articles/:slug
     if (path.startsWith("/articles/")) {
       const slug = path.replace("/articles/", "").replace(/\/$/, "");
       const found = ARTICLES.find(
@@ -45,11 +55,17 @@ export default function App() {
       );
       if (found) {
         setSelectedArticle(found);
+        setIsNotFound(false);
+        return;
+      } else {
+        // Unknown article slug -> 404
+        setSelectedArticle(null);
+        setIsNotFound(true);
         return;
       }
     }
 
-    // Check hash fallback: #article-:id or #article-:slug
+    // 3. Check hash fallback: #article-:id or #article-:slug
     if (hash.startsWith("#article-")) {
       const identifier = hash.replace("#article-", "");
       const found = ARTICLES.find(
@@ -57,12 +73,21 @@ export default function App() {
       );
       if (found) {
         setSelectedArticle(found);
+        setIsNotFound(false);
         return;
       }
     }
 
-    // Default to homepage
+    // 4. Exact root pathname: /
+    if (path === "/" || path === "") {
+      setSelectedArticle(null);
+      setIsNotFound(false);
+      return;
+    }
+
+    // 5. Any other unrecognized path -> 404
     setSelectedArticle(null);
+    setIsNotFound(true);
   }, []);
 
   // Sync with browser navigation & history
@@ -84,6 +109,7 @@ export default function App() {
 
   const handleSelectArticle = (article: Article) => {
     setSelectedArticle(article);
+    setIsNotFound(false);
     const newUrl = `/articles/${article.slug}`;
     if (window.location.pathname !== newUrl) {
       window.history.pushState(null, "", newUrl);
@@ -93,6 +119,7 @@ export default function App() {
 
   const handleBackToArticles = () => {
     setSelectedArticle(null);
+    setIsNotFound(false);
     if (window.location.pathname !== "/") {
       window.history.pushState(null, "", "/");
     }
@@ -108,6 +135,7 @@ export default function App() {
 
   const handleNavigateHome = () => {
     setSelectedArticle(null);
+    setIsNotFound(false);
     if (window.location.pathname !== "/") {
       window.history.pushState(null, "", "/");
     }
@@ -115,8 +143,9 @@ export default function App() {
   };
 
   const handleNavigateSection = (sectionId: string) => {
-    if (selectedArticle) {
+    if (selectedArticle || isNotFound) {
       setSelectedArticle(null);
+      setIsNotFound(false);
       if (window.location.pathname !== "/") {
         window.history.pushState(null, "", "/");
       }
@@ -137,11 +166,11 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 font-sans selection:bg-amber-100 selection:text-stone-900">
       {/* Dynamic SEO & Structured Data Head Manager */}
-      <SEOHead article={selectedArticle} />
+      <SEOHead article={selectedArticle} isNotFound={isNotFound} />
 
       {/* Navigation Header */}
       <Navbar
-        currentView={selectedArticle ? "article" : "home"}
+        currentView={isNotFound ? "404" : selectedArticle ? "article" : "home"}
         onNavigateHome={handleNavigateHome}
         onNavigateSection={handleNavigateSection}
         onDiscoveryClick={() => setIsDiscoveryOpen(true)}
@@ -149,7 +178,14 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1">
-        {selectedArticle ? (
+        {isNotFound ? (
+          /* Custom Friendly 404 Page */
+          <NotFoundPage
+            onNavigateHome={handleNavigateHome}
+            onNavigateSection={handleNavigateSection}
+            onSelectArticle={handleSelectArticle}
+          />
+        ) : selectedArticle ? (
           /* Detailed Long-Form Article Page */
           <ArticleDetail
             article={selectedArticle}

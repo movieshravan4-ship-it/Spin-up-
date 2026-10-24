@@ -41,10 +41,18 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           referrerPolicy="no-referrer"
           onError={(e) => {
             const target = e.currentTarget;
-            if (!target.dataset.fallback) {
-              target.dataset.fallback = "1";
+            if (!target.dataset.fallbackWebp) {
+              target.dataset.fallbackWebp = "1";
               if (target.src.endsWith(".webp")) {
                 target.src = target.src.replace(/\.webp$/, ".jpg");
+                return;
+              }
+            }
+            if (!target.dataset.fallbackAsset) {
+              target.dataset.fallbackAsset = "1";
+              if (target.src.includes("/images/")) {
+                target.src = target.src.replace("/images/", "/assets/images/");
+                return;
               }
             }
           }}
